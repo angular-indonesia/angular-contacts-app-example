@@ -1,43 +1,35 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Contact} from '../../models/contact';
-import {Router} from '@angular/router';
-import {Store} from '@ngrx/store';
-import {ApplicationState} from '../../store/index';
-import * as fromContacts from '../../store/contacts-actions'
 
 @Component({
   selector: 'app-contact-list',
   templateUrl: './contact-list.component.html',
-  styleUrls: ['./contact-list.component.sass']
+  styleUrls: ['./contact-list.component.sass'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ContactListComponent implements OnInit {
 
 
   @Input() contacts: Contact[];
+  @Output() onEdit = new EventEmitter<Contact>();
+  @Output() onShow = new EventEmitter<Contact>();
+  @Output() onDelete = new EventEmitter<Contact>();
 
-  constructor(private router: Router, public store: Store<ApplicationState>) { }
+  constructor() {}
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
 
   showDetails(contact: Contact) {
-    this.router.navigate(['/contacts', contact.id]);
+    this.onShow.emit(contact);
   }
 
   editContact(contact: Contact) {
-    this.router.navigate(['/contacts', contact.id, 'edit']);
+    this.onEdit.emit(contact)
   }
 
-
-
   deleteContact(contact: Contact) {
-
-    const r = confirm('Are you sure?');
-    if (r) {
-      this.store.dispatch(new fromContacts.Delete(contact));
-    }
+    this.onDelete.emit(contact)
   }
 
 }

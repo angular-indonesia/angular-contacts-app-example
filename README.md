@@ -1,11 +1,15 @@
-# Angular CRUD Contacts App Example with NgRx Store and NgRx Effects
+# Angular CRUD Contacts App Example with NgRx Store and NgRx Effects (Version 4)
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
+
 
 
 *Backend is available here: https://github.com/avatsaev/angular-contacts-app-example-api*
 
-This applications uses [@ngrx/store](https://github.com/ngrx/store) to manage application state, and [@ngrx/effects](https://github.com/ngrx/effects) to manange side effects
+This application uses [@ngrx/store](https://github.com/ngrx/platform/blob/master/docs/store/README.md) to manage application state, and [@ngrx/effects](https://github.com/ngrx/platform/blob/master/docs/effects/README.md) to manange side effects
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.2.0.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.2.3.
 
 ![](https://i.imgur.com/FtfRSql.png)
 ![](https://i.imgur.com/GUtoW7j.png)

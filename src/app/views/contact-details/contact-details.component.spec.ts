@@ -1,6 +1,17 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ContactDetailsComponent } from './contact-details.component';
+import {ContactDetailsContainerComponent} from '../../components/contact-details/contact-details-container.component';
+import {StoreModule} from '@ngrx/store';
+import {ActivatedRoute} from '@angular/router';
+import {RouterTestingModule} from '@angular/router/testing';
+import {Observable} from 'rxjs/Observable';
+import { reducers, APP_INIT_STATE } from '../../store';
+import {ContactEffects} from '../../store/contacts-effects';
+import {Actions} from '@ngrx/effects';
+import {ContactsService} from '../../services/contacts.service';
+import {HttpClientModule} from '@angular/common/http';
+
 
 describe('ContactDetailsComponent', () => {
   let component: ContactDetailsComponent;
@@ -8,7 +19,23 @@ describe('ContactDetailsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ContactDetailsComponent ]
+      declarations: [ ContactDetailsComponent, ContactDetailsContainerComponent],
+      imports: [
+        StoreModule.forRoot(reducers, {initialState: APP_INIT_STATE}),
+        RouterTestingModule,
+        HttpClientModule
+      ],
+      providers: [
+        ContactEffects,
+        Actions,
+        ContactsService,
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: Observable.of({contactId: 1})
+          }
+        }
+      ]
     })
     .compileComponents();
   }));
