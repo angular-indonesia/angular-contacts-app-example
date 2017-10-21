@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {Contact} from '../models/contact';
+import { Contact } from '@app-core/models';
 import {Http} from '@angular/http';
-import {environment} from '../../environments/environment';
+import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 
 
@@ -34,8 +34,8 @@ export class ContactsService {
   }
 
 
-  destroy(contact: Contact): Observable<Contact> {
-    return this.http.delete<Contact>(`${environment.appApi.baseUrl}/contacts/${contact.id}`)
+  destroy(id: number): Observable<Contact> {
+    return this.http.delete<Contact>(`${environment.appApi.baseUrl}/contacts/${id}`)
   }
 
 }

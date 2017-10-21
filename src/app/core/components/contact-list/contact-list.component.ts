@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Contact} from '../../models/contact';
+import { Contact } from '@app-core/models';
 
 @Component({
   selector: 'app-contact-list',
@@ -14,6 +14,8 @@ export class ContactListComponent implements OnInit {
   @Output() onEdit = new EventEmitter<Contact>();
   @Output() onShow = new EventEmitter<Contact>();
   @Output() onDelete = new EventEmitter<Contact>();
+
+  contactsTrackByFn = (index: number, contact: Contact) => contact.id;
 
   constructor() {}
 

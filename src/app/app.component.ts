@@ -1,27 +1,24 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import * as fromRootStore from './store'
+import * as fromRoot from '@app-root-store';
 import {Store} from '@ngrx/store';
 
 @Component({
   selector: 'app-root',
-  template: `
-
-
+  template: `      
     <app-toolbar [title]="currentPageTitle$ | async" ></app-toolbar>
 
     <div class="container">
       <router-outlet></router-outlet>
     </div>
-  
   `
 })
 export class AppComponent implements OnInit {
 
   currentPageTitle$: Observable<string>;
-  constructor(private store: Store<fromRootStore.State>) {}
+  constructor(private store: Store<fromRoot.State>) {}
 
   ngOnInit() {
-    this.currentPageTitle$ = this.store.select(fromRootStore.getCurrentTitle);
+    this.currentPageTitle$ = this.store.select(fromRoot.getCurrentTitle);
   }
 }
