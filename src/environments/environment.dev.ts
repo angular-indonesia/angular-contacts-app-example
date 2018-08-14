@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
   appApi: {
-    baseUrl: 'http://api.example.com'
+    baseUrl: 'http://dev.contacts.com:3000'
   }
 };

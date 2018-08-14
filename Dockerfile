@@ -2,15 +2,14 @@
 ### STAGE 1: Build ###
 
 # We label our stage as 'builder'
-FROM node:8-alpine as builder
+FROM node:9-alpine as builder
 
-## Used for the new Angular CLI Workspaces
-ARG NG_PROJECT_NAME
 
-COPY package.json .
+COPY package.json package-lock.json ./
+
 
 ## Storing node modules on a separate layer will prevent unnecessary npm installs at each build
-RUN npm i && mkdir /ng-app && cp -R ./node_modules ./ng-app
+RUN npm i -g npm@6.3 && npm ci && mkdir /ng-app && cp -R ./node_modules ./ng-app
 
 ## Move to /ng-app (eq: cd /ng-app)
 WORKDIR /ng-app
@@ -20,14 +19,14 @@ WORKDIR /ng-app
 COPY . .
 
 ## Build the angular app in production mode and store the artifacts in dist folder
-
-RUN npm run ng build $NG_PROJECT_NAME -- --prod
+ARG NG_ENV=production
+RUN npm run ng build -- --configuration=$NG_ENV
 
 
 ### STAGE 2: Setup ###
 
 FROM nginx:1.13.3-alpine
-ARG NG_PROJECT_NAME
+
 ## Copy our default nginx config
 COPY nginx/default.conf /etc/nginx/conf.d/
 
@@ -35,6 +34,6 @@ COPY nginx/default.conf /etc/nginx/conf.d/
 RUN rm -rf /usr/share/nginx/html/*
 
 ## From 'builder' stage copy over the artifacts in dist folder to default nginx public folder
-COPY --from=builder /ng-app/dist/$NG_PROJECT_NAME /usr/share/nginx/html
+COPY --from=builder /ng-app/dist/angular-contacts /usr/share/nginx/html
 
 CMD ["nginx", "-g", "daemon off;"]
