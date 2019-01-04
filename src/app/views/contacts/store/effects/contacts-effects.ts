@@ -21,6 +21,7 @@ import {Actions, Effect, ofType} from '@ngrx/effects';
 import { Contact } from '@app-core/models';
 import {ContactsService} from '@app-core/services/contacts.service';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
+import {ContactsSocketService} from '@app-core/services/contacts-socket.service';
 
 @Injectable()
 export class ContactsEffects {
@@ -50,7 +51,7 @@ export class ContactsEffects {
     switchMap((contact) => this.contactsService.create(contact)),
     map( (createdContact: Contact) => new CreateSuccess(createdContact)),
     catchError(err => {
-      alert(err['error']['error']['message']);
+      alert(err['message']);
       return of(new Failure({concern: 'CREATE', error: err}));
     })
   );
@@ -65,7 +66,7 @@ export class ContactsEffects {
       changes: updatedContact
     })),
     catchError(err => {
-      alert(err['error']['error']['message']);
+      alert(err['message']);
       return of(new Failure({concern: 'PATCH', error: err}));
     })
   );
@@ -82,9 +83,32 @@ export class ContactsEffects {
     )
   );
 
+
+  // Socket Live Events
+
+  @Effect()
+  liveCreate$: Observable<Action> = this.contactsSocket.fromEvent(ContactsActionTypes.LIVE_CREATED).pipe(
+    map((contact: Contact) => new CreateSuccess(contact))
+  );
+
+
+  @Effect()
+  liveUpdate$: Observable<Action> = this.contactsSocket.fromEvent(ContactsActionTypes.LIVE_UPDATED).pipe(
+    map((contact: Contact) => new PatchSuccess({
+      id: contact.id, changes: contact
+    }))
+  );
+
+  @Effect()
+  liveDestroy$: Observable<Action> = this.contactsSocket.fromEvent(ContactsActionTypes.LIVE_DELETED).pipe(
+    map(id => new DeleteSuccess(+id))
+  );
+
+
   constructor(
       private actions$: Actions,
-      private contactsService: ContactsService
+      private contactsService: ContactsService,
+      private contactsSocket: ContactsSocketService
   ) {}
 
 
