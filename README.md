@@ -1,21 +1,46 @@
-# Angular CRUD Contacts App Example with NgRx Store and NgRx Effects (HTTP+WebSockets)
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://i.imgur.com/R2NlsFd.png" /></a>
+</p>
+
+
+# Full Stack Angular PWA app with NgRx Store, Effects (HTTP+WebSockets), Entity & NestJS
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 
 
 
-*Backend is available here: https://github.com/avatsaev/angular-contacts-app-example-api*
+**Backend is available here: https://github.com/avatsaev/angular-contacts-app-example-api**
 
-This application uses [@ngrx/store](https://github.com/ngrx/platform/blob/master/docs/store/README.md) to manage application state, and [@ngrx/effects](https://github.com/ngrx/platform/blob/master/docs/effects/README.md) to manange side effects (http+sockets), It also uses ngrx 4 fractal state management to leverage lazy loading of reducers and effects.
+
+**DEMO: https://angular-contacts-ngrx.surge.sh**
+
+This application uses [@ngrx/store](https://github.com/ngrx/platform/blob/master/docs/store/README.md) to manage application state, and [@ngrx/effects](https://github.com/ngrx/platform/blob/master/docs/effects/README.md) to manange side effects (http+sockets), It also uses NgRx fractal state management to leverage lazy loading of reducers and effects.
 
 ### New:
 
 [@ngrx/entity](https://github.com/ngrx/platform/tree/master/docs/entity) is released and available on NPM, @ngrx/entity helps to reduce boilerplate and [manipulate data](https://i.imgur.com/2IGdFRB.jpg) in a fast and easy fashion, you can find @ngrx/entity implementation in Contacts Reducer.
 
 
+# NGRX infrastructure
+
+
+## Ngrx + Effects with an HTTP Service
+
+![](https://i.imgur.com/qtjdPbe.png)
+
+
+## Ngrx + Effects with Socket.IO
+
+![](https://i.imgur.com/jIQ4Rd3.png)
+
+
+## Lighthouse Audit:
+
+![](https://i.imgur.com/UqW3s9M.png)
+
+
 ## Get started 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.8
 
 You can run the app with docker compose:
 
@@ -26,10 +51,14 @@ $ docker-compose up --build
 The app will be available at: http://localhost:4000
 
 ![](http://i.imgur.com/TKWwYgQ.png)
+
 ![](http://i.imgur.com/GBBXbuu.png)
+
 ![](http://i.imgur.com/J4inaXx.png)
 
 ## Development server
+
+Start the backend server: https://github.com/avatsaev/angular-contacts-app-example-api
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
